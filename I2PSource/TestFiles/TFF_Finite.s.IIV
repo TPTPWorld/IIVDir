@@ -1,0 +1,128 @@
+% SZS status Success for TestFiles/TFF_Finite.s
+% SZS output start ListOfFormulae for TestFiles/TFF_Finite.s
+fof('$o.',axiom,(
+    $o ),
+    introduced(language,[ level(0) ]),
+    []).
+
+fof(grade,axiom,(
+    grade ),
+    introduced(language,[ level(0) ]),
+    []).
+
+fof(man,axiom,(
+    man ),
+    introduced(language,[ level(0) ]),
+    []).
+
+thf('$o.created_equal',negated_conjecture,(
+    created_equal: $o ),
+    inference(interpretation,[ level(1) ],[ '$o.' ]),
+    []).
+
+tcf('$o.created_equal.d_gotA',plain,(
+    d_gotA: d_man ),
+    inference(interpretation,[ level(2) ],[ '$o.created_equal' ]),
+    []).
+
+tcf('$o.created_equal.d_john',plain,(
+    d_john: d_man ),
+    inference(interpretation,[ level(2) ],[ '$o.created_equal' ]),
+    []).
+
+tcf('$o.created_equal.d_gotA.d_gotA',plain,(
+    d_gotA: d_man ),
+    inference(interpretation,[ level(3) ],[ '$o.created_equal.d_gotA' ]),
+    []).
+
+tcf('$o.created_equal.d_gotA.d_john',plain,(
+    d_john: d_man ),
+    inference(interpretation,[ level(3) ],[ '$o.created_equal.d_gotA' ]),
+    []).
+
+tcf('$o.created_equal.d_john.d_gotA',plain,(
+    d_gotA: d_man ),
+    inference(interpretation,[ level(3) ],[ '$o.created_equal.d_john' ]),
+    []).
+
+tcf('$o.created_equal.d_john.d_john',plain,(
+    d_john: d_man ),
+    inference(interpretation,[ level(3) ],[ '$o.created_equal.d_john' ]),
+    []).
+
+thf('grade.a',negated_conjecture,(
+    a: grade ),
+    inference(interpretation,[ level(1) ],[ grade ]),
+    []).
+
+thf('grade.f',negated_conjecture,(
+    f: grade ),
+    inference(interpretation,[ level(1) ],[ grade ]),
+    []).
+
+thf('grade.grade_of',negated_conjecture,(
+    grade_of: grade ),
+    inference(interpretation,[ level(1) ],[ grade ]),
+    []).
+
+tcf('grade.grade_of.d_gotA',plain,(
+    d_gotA: d_man ),
+    inference(interpretation,[ level(2) ],[ 'grade.grade_of' ]),
+    []).
+
+tcf('grade.grade_of.d_john',plain,(
+    d_john: d_man ),
+    inference(interpretation,[ level(2) ],[ 'grade.grade_of' ]),
+    []).
+
+thf('man.john',negated_conjecture,(
+    john: man ),
+    inference(interpretation,[ level(1) ],[ man ]),
+    []).
+
+tcf('$true.$o',conjecture,(
+    $true ),
+    inference(interpretation,[ level(4) ],[ '$o.created_equal.d_john.d_john', '$o.created_equal.d_gotA.d_gotA' ]),
+    []).
+
+tcf('$false.$o',conjecture,(
+    $false ),
+    inference(interpretation,[ level(4) ],[ '$o.created_equal.d_john.d_gotA', '$o.created_equal.d_gotA.d_john' ]),
+    []).
+
+tcf('d_john.d_man',conjecture,(
+    d_john: d_man ),
+    inference(interpretation,[ level(4) ],[ 'man.john' ]),
+    []).
+
+tcf('d_gotA.d_man',conjecture,(
+    d_gotA: d_man ),
+    inference(interpretation,[ level(4) ],[ ]),
+    []).
+
+tcf('d_a.d_grade',conjecture,(
+    d_a: d_grade ),
+    inference(interpretation,[ level(4) ],[ 'grade.a', 'grade.grade_of.d_gotA' ]),
+    []).
+
+tcf('d_f.d_grade',conjecture,(
+    d_f: d_grade ),
+    inference(interpretation,[ level(4) ],[ 'grade.f', 'grade.grade_of.d_john' ]),
+    []).
+
+fof('$o.d',axiom,(
+    $o ),
+    inference(type,[ level(5) ],[ '$false.$o', '$true.$o' ]),
+    []).
+
+fof(d_grade,axiom,(
+    d_grade ),
+    inference(type,[ level(5) ],[ 'd_a.d_grade', 'd_f.d_grade' ]),
+    []).
+
+fof(d_man,axiom,(
+    d_man ),
+    inference(type,[ level(5) ],[ 'd_gotA.d_man', 'd_john.d_man' ]),
+    []).
+
+% SZS output end ListOfFormulae for TestFiles/TFF_Finite.s
