@@ -183,8 +183,9 @@ convert_structures_to_types([Symbol/Arity|RestOfStructures],ArgType,ResultType,
 %----The ProblemTypes and DomainTypes are lists of individual types. The ProblemSymbolTypes and
 %----DomainElementTypes are lists of symbol-[argtypes,resulttype]. If there are no args it's none.
 %----TF0 case where types are extracted from type role formulae
-extract_symbol_types(InterpretationAnnotatedFormulae,_,PromotionFunctions,ProblemTypes,DomainTypes,
-ProblemSymbolTypes,['$true'-[none,'$o'],'$false'-[none,'$o']|DomainElementTypes]):-
+extract_symbol_types(InterpretationAnnotatedFormulae,_InterpretationFormulae,PromotionFunctions,
+ProblemTypes,DomainTypes,ProblemSymbolTypes,
+['$true'-[none,'$o'],'$false'-[none,'$o']|DomainElementTypes]):-
     member(TFFAnnotatedFormula,InterpretationAnnotatedFormulae),
     TFFAnnotatedFormula =.. [tff,_,interpretation|_],
     !,
@@ -695,8 +696,22 @@ DomainElementTypes,PromotionFunctions,InterpretationLists),
 ProofAnnotatedFormulae).
     
 %--------------------------------------------------------------------------------------------------
+remove_interpretation_subroles(AnnotatedFormulae,TypeFormula):-
+    member(TypeFormula,AnnotatedFormulae),
+    TypeFormula =.. [tff,_,type|_].
+
+remove_interpretation_subroles(AnnotatedFormulae,InterpretationFormula):-
+    member(FirstAnnotatedFormula,AnnotatedFormulae),
+    FirstAnnotatedFormula =.. [tff,Name,Role|OtherStuff],
+    ( Role = interpretation
+    ; Role = (interpretation - _) ),
+    InterpretationFormula =.. [tff,Name,interpretation|OtherStuff].
+%--------------------------------------------------------------------------------------------------
 convert_interpretation_file(InterpretationFile):-
-    read_formulae_from_file(InterpretationFile,InterpretationFormulae,_),
+    read_formulae_from_file(InterpretationFile,AnnotatedFormulae,_),
+    findall(InterpretationFormula,
+remove_interpretation_subroles(AnnotatedFormulae,InterpretationFormula),
+InterpretationFormulae),
 %DEBUG write('InterpretationFormulae: '),write(InterpretationFormulae),nl,
     convert_interpretation_to_proof(InterpretationFormulae,ProofAnnotatedFormulae),
     write('% SZS status Success for '),write(InterpretationFile),nl,
