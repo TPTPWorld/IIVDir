@@ -671,26 +671,30 @@ DomainElementAnnotatedFormulae),
     append(InterpretationAnnotatedFormulae,DomainAnnotatedFormulae,ProofAnnotatedFormulae).
 
 %--------------------------------------------------------------------------------------------------
+ensure_IIV_compatible(_ProblemTypes,_DomainTypes,[_|_]).
+
+%--------------------------------------------------------------------------------------------------
 convert_interpretation_to_proof(InterpretationAnnotatedFormulae,ProofAnnotatedFormulae):-
     convert_interpretation_to_list(InterpretationAnnotatedFormulae,InterpretationFormulae,
 _OtherAnnotatedFormulae),
-write('The formula list is'),nl,writeq(InterpretationFormulae),nl,
+%DEBUG write('The formula list is'),nl,writeq(InterpretationFormulae),nl,
     extract_types(InterpretationAnnotatedFormulae,InterpretationFormulae,ProblemTypes,DomainTypes,
 PromotionFunctions),
-write('The formulae      are '),nl,writeq(InterpretationFormulae),nl,
-write('The problem types are '),nl,writeq(ProblemTypes),nl,
-write('The domain  types are '),nl,writeq(DomainTypes),nl,
-write('The promotions    are '),nl,writeq(PromotionFunctions),nl,
+%DEBUG write('The formulae      are '),nl,writeq(InterpretationFormulae),nl,
+%DEBUG write('The problem types are '),nl,writeq(ProblemTypes),nl,
+%DEBUG write('The domain  types are '),nl,writeq(DomainTypes),nl,
+%DEBUG write('The promotions    are '),nl,writeq(PromotionFunctions),nl,
+    ensure_IIV_compatible(ProblemTypes,DomainTypes,PromotionFunctions),
     extract_symbol_types(InterpretationAnnotatedFormulae,InterpretationFormulae,PromotionFunctions,
 ProblemTypes,DomainTypes,ProblemSymbolTypes,DomainElementTypes),
-write('The problem symbol types are '),nl,writeq(ProblemSymbolTypes),nl,
-write('The domain element types are '),nl,writeq(DomainElementTypes),nl,
+%DEBUG write('The problem symbol types are '),nl,writeq(ProblemSymbolTypes),nl,
+%DEBUG write('The domain element types are '),nl,writeq(DomainElementTypes),nl,
     expand_universal_interpretations(InterpretationFormulae,ProblemSymbolTypes,DomainElementTypes,
 ExpandedInterpretationFormulae),
-write('The expanded interpretation formulae are '),write(ExpandedInterpretationFormulae),nl,
+%DEBUG write('The expanded interpretation formulae are '),write(ExpandedInterpretationFormulae),nl,
     extract_interpretation_lists(ExpandedInterpretationFormulae,ProblemSymbolTypes,
 DomainElementTypes,PromotionFunctions,InterpretationLists),
-write('Interpretations are : '),write(InterpretationLists),nl,
+%DEBUG write('Interpretations are : '),write(InterpretationLists),nl,
     make_nodes_from_interpretation_lists(InterpretationLists,ProblemSymbolTypes,DomainElementTypes,
 ProofAnnotatedFormulae).
     
